@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="cn">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>工单处理系统1</title>
+		<script src="./static/js/main_work.js"></script>
+		<script src="./static/js/vue.min.js"></script>
+		<script src="./static/js/table_vue.js"></script>
+		<script src="./static/js/table_index.js"></script>
+		<!--    饼状图函数-->
+		<link rel="stylesheet" type="text/css" href="./static/css/work.css">
+		<link rel="stylesheet" type="text/css" href="./static/css/table_index.css">
+	</head>
+	<body>
+		<script src="
+./static/js/sweetalert2.all.min.js
+"></script>
+		<link href="
+./static/css/sweetalert2.min.css
+" rel="stylesheet">
+		<div class="topbar">
+			<div class="text-control">工单处理系统</div>
+			<div class="circle-control" id="circleControl">
+				<div id="avatar_vue">
+					<el-dropdown @command="handleCommand">
+						<span class="el-dropdown-link">
+							<img id="avatar" src="./static/image/avatar.jpg" alt="Circle Image" style="width: 30px; height: 30px; border-radius: 50%;">
+						</span>
+						<el-dropdown-menu slot="dropdown">
+							<el-dropdown-item command="logout">退出登录</el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+			</div>
+		</div>
+		<div class="sidebar">
+			<div class="nav">
+				<p>
+					<a href="work" class="custom-link">工单处理</a>
+				</p>
+			</div>
+			<div class="nav" style="background-color: #FFFFFF;">
+				<p>
+					<a style="font-weight: bold;">数据可视化</a>
+				</p>
+			</div>
+		</div>
+		<div class="content">
+			<div id="dataview" style="width: 100%; height: 100%; background-image: url('./static/images/bg.jpg'); background-size: cover;">
+				<el-row :gutter="20">
+					<el-col :span="24">
+						<div class="titleView">
+							<h1 style="color: white;">高炉数据可视化</h1>
+						</div>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20">
+					<el-col :span="4">
+						<div class="line1View lineView">
+
+							<div class="container">
+								<div class="status-light green" id="statusLight"></div>
+								<h3 class="status-text green-text" id="statusText">正常运行</h3>
+							</div>
+
+						</div>
+					</el-col>
+					<el-col :span="5">
+						<div class="line1View lineView">
+
+							<div class="durationLayout">
+								<div id="clock"></div>
+								<div id="dynamicText" class="dynamic-text"></div>
+							</div>
+
+						</div>
+					</el-col>
+					<el-col :span="4">
+						<div class="line1View lineView">
+
+							<div id="RunTime"></div>
+
+						</div>
+					</el-col>
+					<el-col :span="4">
+						<div class="line1View lineView">
+							<div class="abnlineList">
+								<div>
+									<h3 style="color:#ffff99;">实时工单信息</h3>
+								</div>
+								<div class="abnLine">
+									<div class="scroll-list" id="scrollList">
+										<!-- 动态生成的内容将显示在这里 -->
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</el-col>
+					<el-col :span="7">
+						<div class="line1View lineView">
+							<div id="chart-container"></div>
+						</div>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20">
+					<el-col :span="11">
+						<div class="line2View lineView">
+							<div id="stacked"></div>
+						</div>
+					</el-col>
+					<el-col :span="8">
+						<div class="line2View lineView">
+							<div id="stackedPressure"></div>
+						</div>
+					</el-col>
+					<el-col :span="5">
+						<div class="line2View lineView">
+							<div id="realTimeData" style="width: 100%; height: 100%;">
+								<real-time-table style="width: 100%; height: 100%;"></real-time-table>
+							</div>
+						</div>
+					</el-col>
+				</el-row>
+				<el-row :gutter="20" style="background-image: url('./static/images/bg.jpg'); background-size: cover; margin: 1px;">
+					<el-col :span="12">
+						<div class="line3View lineView">
+
+							<div id="Tick1"></div>
+
+						</div>
+					</el-col>
+					<el-col :span="12">
+						<div class="line3View lineView">
+
+							<div id="Tick2"></div>
+
+						</div>
+					</el-col>
+				</el-row>
+			</div>
+		</div>
+		<!-- zzzzzzzzzzzzzzzzz -->
+		<script src="./static/js/work.js"></script>
+		<script src="./static/js/table_vue.js"></script>
+		<script src="./static/js/table_index.js"></script>
+		<script src="./static/js/echarts.min.js"></script>
+		<script src="./static/js/dataView.js"></script>
+		<script>
+			window.onload = checkCookie;
+					// 表格组件定义
+					Vue.component('real-time-table', {
+					  data() {
+					    return {
+					      realTimeTableData: [],
+					      timer: null,
+					    };
+					  },
+					  methods: {
+					    async fetchData() {
+					      try {
+					        const realTimeData = await RealtimeDataGet(); // 异步获取实时数据
+					        this.realTimeTableData = realTimeData; // 更新数据
+					      } catch (error) {
+					        console.error('Failed to fetch data:', error);
+					      }
+					    },
+					    formatValue(row) {
+					      // 自定义格式化函数，用于修改 value 字段的显示样式
+					      return `<span style="font-weight: bold; color: blue;">${row.value}</span>`;
+					    },
+					    startTimer() {
+					      // 每10秒钟调用一次 fetchData 方法
+					      this.timer = setInterval(() => {
+					        this.fetchData();
+					      }, 5000); // 10000 毫秒 = 10 秒
+					    },
+					    stopTimer() {
+					      // 清除定时器
+					      clearInterval(this.timer);
+					      this.timer = null;
+					    }
+					  },
+					  mounted() {
+					    this.fetchData(); // 组件挂载后立即获取一次数据
+					    this.startTimer(); // 启动定时器
+					  },
+					  beforeDestroy() {
+					    this.stopTimer(); // 在组件销毁之前清除定时器
+					  },
+					  template: `
+					    <div style="width: 100%; opacity: 0.5;">
+					      <el-table :data="realTimeTableData" style="width: 100%; background-color: transparent;">
+					        <el-table-column prop="key" label="生产车间" width="150"></el-table-column>
+					        <el-table-column prop="value" label="实时数值">
+					          <template slot-scope="scope">
+					            <span v-html="formatValue(scope.row)"></span>
+					          </template>
+					        </el-table-column>
+					      </el-table>
+					    </div>
+					  `
+					});
+
+
+					// 主 Vue 实例
+					new Vue({
+					  el: '#dataview',
+					  // 其他选项
+					});
+
+
+
+					new Vue({
+					      el: '#avatar_vue',
+					      methods: {
+					        handleCommand(command) {
+					          if (command === 'logout') {
+					            this.logout();
+					          }
+					        },
+					        logout() {
+					          showPopup();
+					          // 退出登录弹窗
+					        }
+					      }
+					    });
+					abnView();
+					stackedViewTemperature();
+					stackedViewPressure();
+					RunTimeJs();
+					delayAndClock();
+					document.addEventListener('DOMContentLoaded', () => {
+			            loadDataIntoScrollList();
+			        });
+					Tick1();
+					Tick2();
+
+
+
+			setInterval(function() {
+			    	Tick1();
+					Tick2();
+					abnView();
+					stackedViewTemperature();
+					stackedViewPressure();
+					RunTimeJs();
+					delayAndClock();
+					loadDataIntoScrollList();
+			}, 10000); // 5000毫秒 = 5秒
+		</script>
+	</body>
+</html>

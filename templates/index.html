@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+	<head>
+		<title>企业工单处理系统</title>
+		<!-- Meta tag Keywords -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="UTF-8" />
+		<meta name="企业工单" content="Report Login Form Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+		<!-- //Meta tag Keywords -->
+		<link href="//fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+		<!--/Style-CSS -->
+		<link rel="stylesheet" href="./static/css/style.css" type="text/css" media="all" />
+		<!--//Style-CSS -->
+
+		<link rel="stylesheet" href="./static/css/font-awesome.min.css" type="text/css" media="all">
+		<script src="./static/js/sweetalert2.all.min.js"></script>
+		<script src="./static/js/check_login.js" async></script>
+		<link href="./static/css/sweetalert2.min.css" rel="stylesheet">
+
+
+	</head>
+
+	<body>
+
+		<!-- form section start -->
+		<section class="w3l-hotair-form">
+			<h1>工 单 系 统 </h1>
+			<div class="container">
+				<!-- /form -->
+				<div class="workinghny-form-grid">
+					<div class="main-hotair">
+						<div class="content-wthree">
+							<h2>登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录&nbsp;</h2>
+							<form id="loginForm">
+								<input type="text" class="text" id="username" name="username" placeholder="账号" required="" autofocus>
+								<input type="password" class="password" id="password" name="password" placeholder="密码" required="" autofocus>
+								<button class="btn" type="submit">登录</button>
+							</form>
+
+							<p class="account">没有账号? <a href="./register">去申请</a>
+							</p>
+						</div>
+						<div class="w3l_form align-self">
+							<div class="left_grid_info">
+								<img src="./static/images/1.png" alt="" class="img-fluid">
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- //form -->
+			</div>
+		</section>
+		<!-- //form section start -->
+		<script>
+			document.getElementById('loginForm').addEventListener('submit', function(event) {
+						    event.preventDefault();
+
+						    var username = document.getElementById('username').value;
+						    var password = document.getElementById('password').value;
+
+						    fetch('/user-login', {
+						            method: 'POST',
+						            headers: {
+						                'Content-Type': 'application/x-www-form-urlencoded'
+						            },
+						            body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+						        })
+						        .then(response => {
+						            if (!response.ok) {
+						                if (response.status === 401) {
+						                    return response.json().then(data => {
+						                        loginno(data.detail);
+						                        throw new Error('Unauthorized');
+						                    });
+						                } else {
+						                    throw new Error('Network response was not ok');
+						                }
+						            }
+						            return response.json();
+						        })
+						        .then(data => {
+						            document.cookie = `access_token=${data.access_token}; max-age=3600; path=/`;
+						            loginok();
+						        })
+						        .catch(error => {
+						            console.error('Error:', error);
+						        });
+						});
+
+						function loginok() {
+						    let timerInterval;
+						    Swal.fire({
+						        title: "登录成功!",
+						        timer: 1000,
+						        timerProgressBar: true,
+						        didOpen: () => {
+						            Swal.showLoading();
+						            const timer = Swal.getPopup().querySelector("b");
+						            timerInterval = setInterval(() => {
+						                timer.textContent = `${Swal.getTimerLeft()}`;
+						            }, 100);
+						        },
+						        willClose: () => {
+						            clearInterval(timerInterval);
+						        }
+						    }).then((result) => {
+						        /* Read more about handling dismissals below */
+						        if (result.dismiss === Swal.DismissReason.timer) {
+						            window.location.href = '/work';
+						        }
+						    });
+						}
+
+						function loginno(message) {
+						    let timerInterval;
+						    Swal.fire({
+						        title: message,
+						        timer: 1000,
+						        timerProgressBar: false,
+						        showConfirmButton: false,
+						        didOpen: () => {
+						            const timer = Swal.getPopup().querySelector("b");
+						            timerInterval = setInterval(() => {
+						                timer.textContent = `${Swal.getTimerLeft()}`;
+						            }, 100);
+						        },
+						        willClose: () => {
+						            clearInterval(timerInterval);
+						        }
+						    }).then((result) => {
+						        /* Read more about handling dismissals below */
+						        if (result.dismiss === Swal.DismissReason.timer) {
+						        }
+						    });
+						}
+		</script>
+	</body>
+
+</html>

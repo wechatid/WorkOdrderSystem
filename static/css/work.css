@@ -1,0 +1,410 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.topbar {
+    background-color: #0568C1;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    box-sizing: border-box; /* 加入盒子模型 */
+}
+
+.exit-button {
+    display: none;
+    cursor: pointer;
+}
+
+.sidebar {
+    background-color: #f2f2f2;
+    height: 100vh;
+    width: 100px;
+    float: left;
+}
+
+.content {
+    width: calc(100% - 100px); /* 使用百分比宽度 */
+    float: left;
+    height: 100vh;
+    box-sizing: border-box; /* 加入盒子模型 */
+    position: relative; /* 确保它有一个堆叠上下文 */
+    z-index: 1; /* 默认堆叠次序 */
+}
+
+/* 媒体查询，针对小屏幕设备进行调整 */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 50px;
+    }
+    .content {
+        width: calc(100% - 50px);
+    }
+}
+
+
+.text-control {
+    color: white; /* 设置字体颜色为白色 */
+    font-size: 22px; /* 设置字体大小 */
+    font-weight: bold;
+    font-family: "Impact", "Papyrus", fantasy;
+    border-radius: 5px; /* 设置圆角 */
+    text-align: center; /* 设置文本居中 */
+}
+
+.sidebar-text{
+    text-align: center;
+    padding: 5px;
+}
+
+
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+
+
+.el-table .warning-row {
+    background: oldlace;
+  }
+
+  .el-table .success-row {
+    background: #f0f9eb;
+  }
+
+.nav{
+    height: 50px;
+    text-align: center;"
+    height: 200px;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+}
+.nav a {
+        }
+
+
+.btn {
+            border: none; /* 去掉按钮的边框 */
+            text-align: center; /* 文字居中 */
+            text-decoration: none; /* 去掉默认的下划线 */
+            display: inline-block; /* 将按钮显示为行内块元素 */
+            cursor: pointer; /* 鼠标悬停时显示手型光标 */
+        }
+
+
+
+
+
+
+a {
+            color: inherit; /* 继承父元素的颜色 */
+            text-decoration: none; /* 去掉下划线 */
+            background-color: inherit; /* 继承背景颜色 */
+        }
+
+        /* 特定类的链接样式 */
+        .custom-link {
+            color: black; /* 设置链接文字颜色 */
+            text-decoration: none; /* 去掉下划线 */
+        }
+
+        /* 鼠标悬停时的样式 */
+        .custom-link:hover {
+            background-color: grey; /* 悬停时背景颜色变化 */
+            color: white; /* 悬停时文字颜色变化 */
+        }
+
+
+
+/*以下是dataview的样式*/
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 100px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
+
+.titleView{
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;    /* 垂直居中 */
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0);
+    height: 50px;
+}
+.lineView{
+background: rgba(255, 255, 255, 0.25);
+}
+
+.line1View {
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;    /* 垂直居中 */
+    border-radius: 4px;
+    /*background: #d3dce6;*/
+    height: 200px;
+    position: relative; /* 添加这一行，使子元素可以使用绝对定位 */
+}
+
+
+
+.line2View {
+  position: relative; /* 确保子元素可以使用绝对定位 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center;    /* 垂直居中 */
+  border-radius: 4px;
+  height: 400px;
+  position: relative;
+}
+
+.line3View {
+  position: relative; /* 确保子元素可以使用绝对定位 */
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center;    /* 垂直居中 */
+  border-radius: 4px;
+  height: 400px;
+  position: relative;
+}
+
+#stacked {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使折线图容器占满父元素 */
+  height: 100%; /* 使折线图容器占满父元素 */
+  overflow: hidden;
+}
+
+#stackedPressure {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使折线图容器占满父元素 */
+  height: 100%; /* 使折线图容器占满父元素 */
+  overflow: hidden;
+}
+
+/*这是饼状图的*/
+* {
+  margin: 0;
+  padding: 0;
+}
+#chart-container {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使饼状图容器占满父元素 */
+  height: 100%; /* 使饼状图容器占满父元素 */
+  overflow: hidden;
+}
+
+
+/*实时数据的*/
+
+
+
+/*呼吸灯*/
+.container {
+    text-align: center;
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .status-light {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    animation: blink-animation 1s infinite alternate;
+    margin-bottom: 10px;
+  }
+
+  .green {
+    background-color: #00ff00;
+  }
+
+  .red {
+    background-color: red;
+  }
+
+  .status-text {
+    font-weight: bold;
+    margin-top: 0px;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+
+  .green-text {
+    color: #00ff00;
+  }
+
+  .red-text {
+    color: red;
+  }
+
+  @keyframes blink-animation {
+    0% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+
+/*作业时长*/
+.durationLayout{
+    font-family: Arial, sans-serif;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+    #clock {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+}
+    .dynamic-text {
+        font-weight: bold;
+        font-size: 18px;
+		color: #ff9900;
+		margin-top: 50px;
+		text-align: center;
+    }
+
+/*作业时长*/
+
+/*运行i澳旅*/
+#RunTime{
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使饼状图容器占满父元素 */
+  height: 100%; /* 使饼状图容器占满父元素 */
+  overflow: hidden;
+}
+/*运行效率*/
+
+/*滚动的工单信息*/
+.abnlineList{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+.abnlineList > .abnLine {
+    flex: 1;
+    width: 100%;
+}
+.abnlineList > h3 {
+    order: -1; /* 让 h2 在 flex 容器中优先显示在顶部 */
+}
+
+.abnLine {
+            position: relative;
+            background-color: transparent; /* 将背景色设置为透明 */
+            height: 150px;
+            width: 200px;
+            margin: auto;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .abnLine > .scroll-list {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            animation: scroll 15s linear infinite normal;
+        }
+
+        .abnLine > .scroll-list > div {
+            width: 100%;
+            height: 30px;
+            background-color: rgba(30, 167, 255, 0.8); /* 半透明背景色 */
+            display: flex;
+            justify-content: space-between; /* 左右对齐 */
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+        }
+
+        .abnLine > .scroll-list > div.error {
+            background-color: rgba(255, 255, 255, 0.1); /* 异常状态背景色 */
+        }
+
+        .abnLine > .scroll-list > div:nth-child(odd) {
+            background-color: rgba(24, 217, 248, 1); /* 偶数行背景色 */
+        }
+
+        .abnLine > .scroll-list > div.normal {
+            background-color: rgba(255, 255, 255, 0.1); /* 正常状态背景色 */
+        }
+
+        @keyframes scroll {
+            100% {
+                top: -200px;
+            }
+        }
+
+
+
+        /*滚动的工单信息*/
+
+#Tick1 {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使饼状图容器占满父元素 */
+  height: 100%; /* 使饼状图容器占满父元素 */
+  overflow: hidden;
+  margin: 0px;
+}
+
+#Tick2 {
+  position: absolute; /* 使用绝对定位 */
+  top: 0;
+  left: 0;
+  width: 100%; /* 使饼状图容器占满父元素 */
+  height: 100%; /* 使饼状图容器占满父元素 */
+  overflow: hidden;
+  margin: 0px;
+}
+
