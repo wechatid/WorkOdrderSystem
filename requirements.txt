@@ -9,3 +9,4 @@ passlib
 pymysql
 python-multipart
 jinja2
+bcrypt
