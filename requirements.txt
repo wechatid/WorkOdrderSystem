@@ -6,3 +6,6 @@ pytz
 pydantic
 pandas
 passlib
+pymysql
+python-multipart
+jinja2
